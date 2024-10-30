@@ -3,154 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Review for Meng at Niku X</title>
+    <title>Review for Meng</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #000; /* Black background */
+            background-color: black;
+            color: white;
             font-family: Arial, sans-serif;
-            color: #fff;
-            text-align: center;
-            min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-        }
-        .container {
-            background-color: rgba(0, 0, 0, 0.85); /* Slight transparency for contrast */
-            padding: 20px;
-            max-width: 800px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
         }
         h1 {
-            font-size: 36px;
+            font-size: 2em;
             margin-bottom: 20px;
         }
-        .button {
-            background-color: #ff9900;
-            border: none;
-            color: white;
-            padding: 15px 30px;
-            text-align: center;
-            font-size: 18px;
-            margin: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            display: inline-block;
-            width: 250px;
-        }
-        .button:hover {
-            background-color: #cc7a00;
-        }
-        #reviewBox {
-            font-size: 18px;
+        #review {
+            background-color: #333;
             padding: 20px;
-            background-color: #222;
-            border-radius: 10px;
-            margin-top: 20px;
-            min-height: 150px;
-            text-align: left;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+            margin-bottom: 20px;
         }
-        .button-container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-            flex-wrap: wrap;
+        button {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 3px;
         }
-        a {
-            text-decoration: none;
-            display: inline-block;
-            width: 250px;
+        button:hover {
+            background-color: #c9302c;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Review for Meng</h1>
-        <button class="button" onclick="generateReview()">Generate Review</button>
-        <button class="button" onclick="copyToClipboard()">Copy to Clipboard</button>
-        
-        <div id="reviewBox">Your review will appear here...</div>
-        
-        <div class="button-container">
-            <a href="https://www.yelp.com/writeareview/biz/7mDnGste6X27GytIvnOkog?return_url=https%3A%2F%2Fm.yelp.com%2Fbiz%2Fniku-x-los-angeles-2%3Fhrid%3D21cnYOQPz91MOB7Ammd-lw%26utm_medium%3Dreroute%26utm_source%3Dapple_maps&review_origin=mobile-site-biz-details-action-button" class="button">Submit Your Review on Yelp</a>
-            <a href="https://search.google.com/local/reviews?placeid=ChIJG6vM7KnHwoARC-j0FBuYTvA&q=google+review+niku+x+la&hl=en&gl=US" class="button">Leave a Google Review</a>
-        </div>
-    </div>
+
+    <h1>Review for Meng</h1>
+    <div id="review">Click "Generate Review" to see a random review for Meng!</div>
+    <button onclick="generateReview()">Generate Review</button>
+    <button onclick="copyReview()">Copy Review</button>
+    <br>
+    <button onclick="window.open('https://www.yelp.com/writeareview/biz/7mDnGste6X27GytIvnOkog?return_url=https%3A%2F%2Fm.yelp.com%2Fbiz%2Fniku-x-los-angeles-2%3Fhrid%3D21cnYOQPz91MOB7Ammd-lw%26utm_medium%3Dreroute%26utm_source%3Dapple_maps&review_origin=mobile-site-biz-details-action-button', '_blank')">Yelp Review</button>
+    <button onclick="window.open('https://search.google.com/local/reviews?placeid=ChIJG6vM7KnHwoARC-j0FBuYTvA&q=google+review+niku+x+la&hl=en&gl=US', '_blank')">Google Review</button>
 
     <script>
-        const reviews = {
+        const reviewTemplates = {
             service: [
-                "Meng was the perfect server! His warm demeanor and knowledge of the menu made the entire experience amazing.",
-                "Meng made sure everything was just right. His attention to detail and friendly personality made us feel like VIPs.",
-                "Top-notch service from Meng. He was attentive but never intrusive, always ensuring our needs were met.",
-                "Meng was fantastic! He took the time to explain the menu in detail and made excellent recommendations. His service was impeccable.",
-                "What a great experience thanks to Meng! He was efficient, polite, and truly made the meal memorable.",
-                "Meng's service was beyond impressive. He was knowledgeable and genuinely cared about making sure we had the best experience.",
-                "Meng was outstanding! He checked on us regularly without being overbearing and made our dining experience one to remember.",
-                "If you’re dining at Niku X, make sure to ask for Meng! He provided excellent service and made sure we were comfortable throughout our meal.",
-                "Meng’s friendly approach and dedication to his work stood out. He elevated the entire dining experience with his charm and professionalism."
+                "Meng was incredibly attentive and made sure we had everything we needed for a perfect meal. Truly a fantastic server!",
+                "The service from Meng was impeccable. They were friendly, efficient, and made our dining experience unforgettable.",
+                "Meng's hospitality was top-notch. They went above and beyond to ensure our meal was enjoyable from start to finish.",
+                "The personalized service from Meng was one of the best I've experienced. They made us feel like VIPs throughout the meal.",
+                "Meng provided exceptional service, always checking in at the right time without being intrusive. Truly a class act!",
+                "Our server, Meng, was simply outstanding! Their knowledge of the menu and friendly attitude enhanced our dining experience.",
+                "Meng offered attentive, friendly service, making sure our every need was met with a smile.",
+                "The warm and attentive service by Meng made the meal extra special. Truly a memorable experience!",
+                "Meng's attention to detail and friendly service made us feel at home. Exceptional service all around.",
+                "I've rarely experienced such excellent service. Meng was polite, attentive, and genuinely cared about our experience."
             ],
             food: [
-                "The A5 Wagyu was melt-in-your-mouth perfection! Meng guided us through the menu, and we loved every bite.",
-                "Amazing selection of Wagyu and seafood. The king crab legs and lobster tails were so fresh! Meng made sure we tried the best cuts.",
-                "The Wagyu at Niku X is second to none! Meng made the experience even better by explaining the differences between each cut.",
-                "The food here is unreal! From the A5 Wagyu to the fresh oysters, everything was delicious. Meng recommended the perfect dishes.",
-                "Unforgettable meal! The A5 Wagyu was incredibly tender, and the seafood was top-notch. Meng’s suggestions made the experience perfect.",
-                "The variety of Wagyu and fresh seafood is unbeatable! We especially loved the king crab legs. Meng was knowledgeable and helpful throughout.",
-                "Our meal at Niku X was a culinary masterpiece. The A5 Wagyu was divine, and the seafood options were just as incredible. Meng made it even better with his recommendations.",
-                "Each dish was a work of art, from the flavorful Wagyu steaks to the fresh seafood. Meng ensured we sampled the best of what Niku X has to offer.",
-                "The seafood and Wagyu here are top-tier. Meng’s recommendations were spot on, and we enjoyed every bite!"
+                "The wagyu selection at Niku X is mind-blowing. Each cut is tender and full of flavor, definitely a meat lover’s paradise.",
+                "The variety of wagyu and seafood here is top-notch. Everything from the A5 wagyu to the king crab legs was fresh and delicious.",
+                "The food was outstanding! The A5 Japanese wagyu melted in my mouth, and the lobster tails were absolutely delicious.",
+                "Niku X is heaven for seafood and steak lovers. The range of wagyu cuts and fresh oysters were a highlight!",
+                "I was blown away by the quality of the food. The wagyu was rich and buttery, and the sashimi was so fresh!",
+                "The selection of premium wagyu and seafood at Niku X is unparalleled. Each bite was a delight for the taste buds!",
+                "The A5 wagyu and sashimi were of superb quality! A fantastic place to indulge in luxurious flavors.",
+                "If you love wagyu, Niku X is a must. Every cut was perfectly marbled, and the seafood was fresh and flavorful.",
+                "The food here is phenomenal! From the tender wagyu to the juicy crab legs, everything was a 10/10.",
+                "Absolutely loved the food selection. The wagyu was a highlight, and the oysters were fresh and briny."
             ],
             drinks: [
-                "Meng recommended the perfect sake pairing for our meal. It complemented the Wagyu perfectly.",
-                "The wine list here is extensive, and Meng’s knowledge of it was impressive. He helped us choose a bottle that matched our meal perfectly.",
-                "Meng helped us pick out cocktails that paired wonderfully with our food. His expertise in drinks really stood out.",
-                "The sake and cocktails were exceptional! Meng helped us select the perfect options to enhance our meal.",
-                "The drinks at Niku X are outstanding, and Meng’s suggestions really elevated the experience.",
-                "We enjoyed some amazing sake thanks to Meng’s expert recommendations. It was the perfect addition to our meal.",
-                "Meng knew exactly what drinks would pair best with our food. His suggestions for cocktails and sake were spot-on.",
-                "The cocktail menu was impressive, and Meng helped us choose the best drinks to match our meal.",
-                "The sake pairing Meng recommended was flawless. It truly brought out the flavors of the Wagyu."
+                "The cocktail selection at Niku X is creative and refreshing. Each drink complemented our meal perfectly.",
+                "I loved the variety of drinks on the menu! My cocktail was beautifully crafted and paired well with the rich flavors of wagyu.",
+                "Niku X offers an excellent range of beverages. My wine perfectly complemented the richness of the steak.",
+                "The drink selection here is impressive, with unique cocktails that enhance the dining experience.",
+                "Our drinks were delightful and matched perfectly with the food. Great selection of wines and cocktails!",
+                "The cocktails are well-balanced and refreshing. Perfect for an upscale meal like this.",
+                "The drink menu at Niku X is fantastic. My cocktail had the right balance of flavors, enhancing the meal's richness.",
+                "The drinks here are just as amazing as the food. Creative cocktails and an impressive wine selection!",
+                "I enjoyed a well-crafted cocktail that complemented the wagyu beautifully. Great drink choices!",
+                "They have a thoughtful drink menu here. My cocktail had a unique twist that was both refreshing and delicious."
             ],
-            environment: [
-                "The ambiance at Niku X is sleek and modern, with a luxurious feel. Meng’s service made the evening even more special.",
-                "Niku X has an elegant atmosphere that’s perfect for a special occasion. Meng’s service fit right in with the upscale vibe.",
-                "The environment is classy but comfortable, and Meng made sure our experience was unforgettable.",
-                "Niku X is stunning inside, with a chic and stylish design. Meng’s exceptional service made it all the more enjoyable.",
-                "The restaurant has a refined and inviting atmosphere, and Meng’s friendly service made us feel right at home.",
-                "Niku X’s ambiance is elegant yet welcoming. Meng made sure we were comfortable and enjoying ourselves throughout the night.",
-                "The atmosphere is perfect for a fine dining experience. The elegant surroundings, combined with Meng’s stellar service, made for a perfect evening.",
-                "Niku X is modern and beautifully designed. Meng’s warm service added to the overall luxurious experience.",
-                "With a contemporary vibe and excellent service from Meng, Niku X is the ideal spot for a memorable night out."
+            ambiance: [
+                "The ambiance at Niku X is elegant yet comfortable, making it an ideal spot for a special night out.",
+                "Loved the chic and stylish interior. The atmosphere added a touch of luxury to our dining experience.",
+                "Niku X has a modern, upscale vibe with a comfortable feel. Perfect for celebrating special occasions.",
+                "The restaurant's ambiance is perfect for a relaxed yet sophisticated dining experience.",
+                "Great ambiance! The interior is sleek and modern, creating a comfortable and stylish environment.",
+                "Niku X has a classy, relaxing atmosphere with dim lighting, making it perfect for an evening out.",
+                "The decor and vibe here are fantastic. It feels luxurious yet welcoming, enhancing the meal.",
+                "A sophisticated setting with a warm vibe. Perfect for an unforgettable dining experience.",
+                "Beautiful ambiance with a sleek design. It sets the right mood for enjoying high-quality wagyu.",
+                "The atmosphere is perfect here—modern, elegant, and inviting. It really completes the dining experience."
             ]
         };
 
-        function getRandomElement(arr) {
-            return arr[Math.floor(Math.random() * arr.length)];
+        function getRandomReview() {
+            const serviceReview = reviewTemplates.service[Math.floor(Math.random() * reviewTemplates.service.length)];
+            const foodReview = reviewTemplates.food[Math.floor(Math.random() * reviewTemplates.food.length)];
+            const drinkReview = reviewTemplates.drinks[Math.floor(Math.random() * reviewTemplates.drinks.length)];
+            const ambianceReview = reviewTemplates.ambiance[Math.floor(Math.random() * reviewTemplates.ambiance.length)];
+            return `${serviceReview} ${foodReview} ${drinkReview} ${ambianceReview}`;
         }
 
         function generateReview() {
-            const review = [
-                getRandomElement(reviews.service),
-                getRandomElement(reviews.food),
-                getRandomElement(reviews.drinks),
-                getRandomElement(reviews.environment)
-            ].join(" ");
-
-            document.getElementById("reviewBox").innerText = review;
+            document.getElementById("review").innerText = getRandomReview();
         }
 
-        function copyToClipboard() {
-            const reviewText = document.getElementById("reviewBox").innerText;
+        function copyReview() {
+            const reviewText = document.getElementById("review").innerText;
             navigator.clipboard.writeText(reviewText).then(() => {
                 alert("Review copied to clipboard!");
-            }).catch(err => {
-                console.error("Could not copy text: ", err);
             });
         }
     </script>
+
 </body>
 </html>
